@@ -1,5 +1,5 @@
 # How Many Triangles?
-Solves the "how many triangles in this shape?" riddles
+Solves the **"how many triangles in this shape?"** types of riddles
 
 ### Example:
 
