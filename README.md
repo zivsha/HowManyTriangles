@@ -1,25 +1,37 @@
 # How Many Triangles?
 Solves the **"how many triangles in this shape?"** types of riddles
 
-### Example:
+### Example
 
 ![Riddlge2](img/riddle2.jpg)
 
-Takes an input of lines made up of indices of nodes (lines intersections) in the shape.
+
+### Usages
+
+The  application takes an input of lines made up of indices of nodes (lines intersections) in the shape.
 
 Mark each node with a unique index and create a `Line` from the indices of each actual (full) line in the shape:
 
+![Riddlge2](img/riddle2_with_indices.jpg)
+
 ```csharp
-Line[] example = 
+Line[] example =
 {
-    new Line(new List<int>(){ 1, 2 , 3 , 4 , 5  }),
-    new Line(new List<int>(){ 1, 9 , 8 , 7 , 6  }),
-    new Line(new List<int>(){ 1, 10, 11, 12, 13 }),
-    new Line(new List<int>(){ 1, 17, 16, 15, 14 }),
-    new Line(new List<int>(){ 2, 9 , 10, 17 }),
-    new Line(new List<int>(){ 3, 8 , 11, 16 }),
-    new Line(new List<int>(){ 4, 7 , 12, 15 }),
-    new Line(new List<int>(){ 5, 6 , 13, 14 })
+    //Horizontal lines (-):
+    new Line(new List<int>(){ 2, 3 }),
+    new Line(new List<int>(){ 4, 5, 6 }),
+    new Line(new List<int>(){ 7, 8, 9, 10 }),
+    new Line(new List<int>(){ 11, 12, 13, 14, 15 }),
+    //Diagonal lines (/)
+    new Line(new List<int>(){ 1, 2 , 4 , 7 , 11  }),
+    new Line(new List<int>(){ 3, 5 , 8 , 12 }),
+    new Line(new List<int>(){ 6, 9 , 13 }),
+    new Line(new List<int>(){ 10, 14 }),
+    //Diagonal lines (\)
+    new Line(new List<int>(){ 1, 3 , 6 , 10 , 15  }),
+    new Line(new List<int>(){ 2, 5 , 9 , 14 }),
+    new Line(new List<int>(){ 4, 8 , 13 }),
+    new Line(new List<int>(){ 7, 12 }),
 };
 
 
