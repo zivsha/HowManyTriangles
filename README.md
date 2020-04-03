@@ -3,7 +3,7 @@ Solves the **"how many triangles in this shape?"** types of riddles
 
 ### Example
 
-![Riddlge2](img/riddle2.jpg)
+![riddle2.jpg](img/riddle2.jpg)
 
 
 ### Usages
@@ -12,7 +12,7 @@ The  application takes an input of lines made up of indices of nodes (lines inte
 
 Mark each node with a unique index and create a `Line` from the indices of each actual (full) line in the shape:
 
-![Riddlge2](img/riddle2_with_indices.jpg)
+![riddle2_with_indices.jpg](img/riddle2_with_indices.jpg)
 
 ```csharp
 Line[] example =
@@ -36,3 +36,10 @@ Line[] example =
 
 
 ```
+
+### Output
+
+Running the above example gives the following result:
+
+
+![example_result.PNG](img/example_result.PNG)
