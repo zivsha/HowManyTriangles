@@ -7,7 +7,7 @@ Solves the **"how many triangles in this shape?"** types of riddles
 
 Takes an input of lines made up of indices of nodes (lines intersections) in the shape.
 
-Mark echo node with a unique index and create a `Line` from the indices of each actual (full) line in the shape:
+Mark each node with a unique index and create a `Line` from the indices of each actual (full) line in the shape:
 
 ```csharp
 Line[] example = 
