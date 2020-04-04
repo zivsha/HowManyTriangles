@@ -5,7 +5,7 @@ namespace HowManyTriangles
 {
     public class HMTSolver
     {
-        public IEnumerable<Edge> Edges { get; private set; }
+        public IEnumerable<Line> Edges { get; private set; }
 
         public HMTSolver(IEnumerable<Line> lines)
         {
@@ -19,23 +19,23 @@ namespace HowManyTriangles
         {
             HashSet<Triangle> trianglesFound = new HashSet<Triangle>();
 
-            foreach (Edge e1 in Edges)
+            foreach (Line l1 in Edges)
             {
-                foreach (Edge e2 in Edges)
+                foreach (Line l2 in Edges)
                 {
-                    if (e1 == e2)
+                    if (l1 == l2)
                     {
                         continue;
                     }
-                    foreach (Edge e3 in Edges)
+                    foreach (Line l3 in Edges)
                     {
-                        if (e1 == e3 || e2 == e3)
+                        if (l1 == l3 || l2 == l3)
                         {
                             continue;
                         }
-                        if (FormsATriangle(e1, e2, e3))
+                        if (FormsATriangle(l1, l2, l3))
                         {
-                            trianglesFound.Add(new Triangle(e1, e2, e3));
+                            trianglesFound.Add(new Triangle(l1, l2, l3));
                         }
                     }
                 }
@@ -43,7 +43,7 @@ namespace HowManyTriangles
             return trianglesFound;
         }
 
-        private static bool FormsATriangle(Edge e1, Edge e2, Edge e3)
+        private static bool FormsATriangle(Line e1, Line e2, Line e3)
         {
             if (e1.IsConcatOf(e2, e3))
             {
@@ -67,12 +67,11 @@ namespace HowManyTriangles
                    (e1.A == e2.B && e2.A == e3.B && e3.A == e1.B);
         }
 
-        private static void PrintEdges(IEnumerable<Edge> edges)
+        private static void PrintEdges(IEnumerable<Line> edges)
         {
-            IOrderedEnumerable<Edge> sorted = edges.OrderBy(e => e.IsLine);
-            foreach (Edge e in sorted)
+            foreach (Line e in edges)
             {
-                System.Console.WriteLine($"{e} ({(e.IsLine ? "Line" : "Edge")})");
+                System.Console.WriteLine($"{e}");
             }
         }
     }

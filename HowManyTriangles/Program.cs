@@ -13,7 +13,7 @@ namespace HowManyTrianglesApp
             IEnumerable<Line> riddle2 = Riddles.Riddle2;
             IEnumerable<Line> riddle3 = Riddles.Riddle3;
 
-            Benchmark();
+            //Benchmark();
 
             HMTSolver solver = new HMTSolver(riddle3);
             IEnumerable<Triangle> result = solver.Solve();

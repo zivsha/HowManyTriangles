@@ -2,18 +2,18 @@
 {
     public class Triangle
     {
-        public Triangle(Edge a, Edge b, Edge c)
+        public Triangle(Line a, Line b, Line c)
         {
             A = a;
             B = b;
             C = c;
         }
-        public Edge A { get; set; }
-        public Edge B { get; set; }
-        public Edge C { get; set; }
+        public Line A { get; set; }
+        public Line B { get; set; }
+        public Line C { get; set; }
         public override string ToString()
         {
-            return $"{A.ToStringEdge()}, {B.ToStringEdge()}, {C.ToStringEdge()}";
+            return $"{A.ToStringAsEdge()}, {B.ToStringAsEdge()}, {C.ToStringAsEdge()}";
         }
         public override bool Equals(object obj)
         {

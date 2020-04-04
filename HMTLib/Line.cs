@@ -1,31 +1,47 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HowManyTriangles
 {
-    public class Line : Edge
+    public class Line : IEnumerable<int>
     {
         #region Constructors
+
         public Line()
-        { 
-        }
-        public Line(List<int> orderedNodesThatFormAline) :
-            base(orderedNodesThatFormAline.First(), orderedNodesThatFormAline.Last())
         {
-            int indicesCount = orderedNodesThatFormAline.Count;
-            if (orderedNodesThatFormAline.Distinct().Count() != indicesCount)
-            {
-                throw new ArgumentException("The given list of indices are not a valid line");
-            }
-            Indices = orderedNodesThatFormAline;
+            Indices = new List<int>();
         }
 
-        public Line(Edge e1, Edge e2) : this(CreateFrom(e1, e2))
+        public Line(Line other)
         {
+            Indices = new List<int>(other.Indices);
         }
 
         #endregion //Constructors
+
+        #region Properties
+
+        public int A 
+        { 
+            get 
+            { 
+                return Indices[0]; 
+            } 
+        }
+
+        public int B 
+        { 
+            get
+            { 
+                return Indices[Indices.Count - 1]; 
+            } 
+        }
+
+        public List<int> Indices { get; protected set; }
+
+        #endregion //Properties
 
         #region object overrides
 
@@ -41,26 +57,55 @@ namespace HowManyTriangles
             return sb.ToString();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Line other))
+            {
+                return false;
+            }
+            return Indices.SequenceEqual(other.Indices);
+        }
+
+        public override int GetHashCode()
+        {
+            return Indices.GetHashCode();
+        }
+
         #endregion //object overrides
 
         #region Public API
 
-        public List<Edge> ToEdges()
+        public string ToStringAsEdge()
         {
-            List<Edge> edges = new List<Edge>();
+            return $"{A}-{B}";
+        }
+
+        public virtual bool Holds(int i)
+        {
+            return Indices.Contains(i);
+        }
+
+        public virtual bool ConnectedTo(Line line)
+        {
+            return Holds(line.A) || Holds(line.B);
+        }
+
+        public List<Line> ToEdges()
+        {
+            List<Line> edges = new List<Line>();
             for (int i = 2; i <= Indices.Count; i++)
             {
                 foreach (IEnumerable<int> combination in Indices.FindConsecutiveGroups(x => true, i))
                 {
-                    edges.Add(new Line(combination.ToList()));
+                    edges.Add(new Line() { combination });
                 }
             }
             return edges.Distinct().ToList();
         }
 
-        public override bool IsConcatOf(Edge e1, Edge e2)
+        public virtual bool IsConcatOf(Line e1, Line e2)
         {
-            if (!IsLine)
+            if (Indices.Count < 3)
             {
                 return false;
             }
@@ -84,35 +129,26 @@ namespace HowManyTriangles
         }
         #endregion //Public API
 
-
-
-        #region Private
-
-        private static List<int> CreateFrom(Edge e1, Edge e2)
+        #region IEnumerable Related
+        public IEnumerator<int> GetEnumerator()
         {
-            //TODO: This is ignoring the indices in e1 and e2 that are not the edges
-            if (e1.A == e2.A)
-            {
-                return new List<int>() { e1.B, e1.A, e2.B };
-            }
-            else if (e1.A == e2.B)
-            {
-                return new List<int>() { e1.B, e1.A, e2.A };
-            }
-            else if (e1.B == e2.A)
-            {
-                return new List<int>() { e1.A, e1.B, e2.B };
-            }
-            else if (e1.B == e2.B)
-            {
-                return new List<int>() { e1.A, e1.B, e2.A };
-            }
-            else
-            {
-                throw new ArgumentException($"{e1} is not connected to {e2}");
-            }
+            return Indices.GetEnumerator();
         }
 
-        #endregion //Private
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Indices.GetEnumerator();
+        }
+
+        public void Add(int i)
+        {
+            Indices.Add(i);
+        }
+
+        public void Add(IEnumerable<int> indices)
+        {
+            Indices.AddRange(indices);
+        }
+        #endregion //IEnumerable Related
     }
 }
