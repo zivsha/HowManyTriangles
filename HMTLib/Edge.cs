@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HowManyTriangles
 {
-    public class Edge
+    public class Edge : IEnumerable<int>
     {
-        public bool IsLine { get; protected set; }
+        public bool IsLine { get { return Indices.Count > 2; } }
         public List<int> Indices { get; protected set; }
+
+        public Edge()
+        {
+            Indices = new List<int>();
+        }
 
         public Edge(int a, int b)
         {
-            Assign(a, b);
-            Indices = new List<int>() { A, B };
-            IsLine = false;
+            Indices = new List<int>() { a, b };
         }
 
         public string ToStringEdge()
@@ -27,9 +31,9 @@ namespace HowManyTriangles
 
         #region Public API
 
-        public int A { get; private set; }
+        public int A { get { return Indices[0]; } }
+        public int B { get { return Indices[Indices.Count-1]; } }
 
-        public int B { get; private set; }
         public virtual bool Holds(int i)
         {
             return Indices.Contains(i);
@@ -68,29 +72,24 @@ namespace HowManyTriangles
         {
             return Indices.GetHashCode();
         }
-
+        public void Add(int i)
+        {
+            Indices.Add(i);
+        }
         #endregion //object overrides
 
 
 
         #region Private
 
-        private void Assign(int a, int b)
+        public IEnumerator<int> GetEnumerator()
         {
-            if (a < b)
-            {
-                A = a;
-                B = b;
-            }
-            else if (a > b)
-            {
-                A = b;
-                B = a;
-            }
-            else
-            {
-                throw new ArgumentException("Cannot assign esge with a single point");
-            }
+            return Indices.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Indices.GetEnumerator();
         }
 
         #endregion //Private

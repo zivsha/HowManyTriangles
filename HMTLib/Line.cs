@@ -7,7 +7,9 @@ namespace HowManyTriangles
     public class Line : Edge
     {
         #region Constructors
-
+        public Line()
+        { 
+        }
         public Line(List<int> orderedNodesThatFormAline) :
             base(orderedNodesThatFormAline.First(), orderedNodesThatFormAline.Last())
         {
@@ -16,7 +18,6 @@ namespace HowManyTriangles
             {
                 throw new ArgumentException("The given list of indices are not a valid line");
             }
-            IsLine = indicesCount > 2;
             Indices = orderedNodesThatFormAline;
         }
 
@@ -89,6 +90,7 @@ namespace HowManyTriangles
 
         private static List<int> CreateFrom(Edge e1, Edge e2)
         {
+            //TODO: This is ignoring the indices in e1 and e2 that are not the edges
             if (e1.A == e2.A)
             {
                 return new List<int>() { e1.B, e1.A, e2.B };
