@@ -1,6 +1,6 @@
 ﻿namespace HowManyTriangles
 {
-    internal class Triangle
+    public class Triangle
     {
         public Triangle(Edge a, Edge b, Edge c)
         {
@@ -13,7 +13,7 @@
         public Edge C { get; set; }
         public override string ToString()
         {
-            return $"{A}, {B}, {C}";
+            return $"{A.ToStringEdge()}, {B.ToStringEdge()}, {C.ToStringEdge()}";
         }
         public override bool Equals(object obj)
         {
